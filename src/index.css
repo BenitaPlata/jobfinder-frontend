@@ -5,7 +5,7 @@
 
 html {
   min-height: 100vh;
-  background-image: url('/backgrounds/home.jpg') !important;
+  background-image: url('/backgrounds/home.webp') !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
