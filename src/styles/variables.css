@@ -1,0 +1,126 @@
+:root {
+  /* ===============================
+     🎨 IDENTIDAD (PASTELES NEÓN)
+     =============================== */
+  --color-primary: #C9ADE3;        /* lila neón suave */
+  --color-primary-dark: #B794D4;
+  --color-primary-light: #E0D0F0;
+  
+  --color-secondary: #FFB3D9;      /* rosa neón */
+  --color-secondary-dark: #FF99CC;
+  --color-secondary-light: #FFD6EC;
+  
+  --color-accent: #7FFFD4;         /* aqua neón */
+  --color-accent-dark: #5FE6C0;
+  --color-accent-light: #B8FFE8;
+
+  /* ===============================
+     🌈 COLORES NEÓN ADICIONALES
+     =============================== */
+  --neon-cyan: #00F5FF;
+  --neon-purple: #BF40BF;
+  --neon-pink: #FF10F0;
+  --neon-green: #39FF14;
+
+  /* ===============================
+     🖤 FONDOS (DARK MODE REAL)
+     =============================== */
+  --bg-primary: #0a0a0f;           /* casi negro */
+  --bg-secondary: #12121a;         /* negro grisáceo */
+  --bg-tertiary: #1a1a24;          /* gris oscuro */
+  --bg-card: #1e1e2e;              /* cards con leve elevación */
+
+  /* ===============================
+     ✍️ TEXTO (ALTO CONTRASTE)
+     =============================== */
+  --text-primary: #f5f5ff;         /* blanco suave */
+  --text-secondary: #c7c7d1;       /* gris claro */
+  --text-tertiary: #9090a0;        /* gris medio */
+  --text-light: #ffffff;
+
+  /* ===============================
+     🧭 NAVBAR
+     =============================== */
+  --color-navbar: #0a0a0f;
+  --color-navbar-dark: #050508;
+
+  /* ===============================
+     🌟 GRADIENTES NEÓN
+     =============================== */
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(201, 173, 227, 0.15) 0%,
+    rgba(127, 255, 212, 0.15) 100%
+  );
+
+  --gradient-secondary: linear-gradient(
+    135deg,
+    rgba(255, 179, 217, 0.2) 0%,
+    rgba(191, 64, 191, 0.2) 100%
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    rgba(127, 255, 212, 0.2) 0%,
+    rgba(57, 255, 20, 0.2) 100%
+  );
+
+  --gradient-navbar: linear-gradient(
+    135deg,
+    #0a0a0f 0%,
+    #12121a 100%
+  );
+
+  /* ===============================
+     ✨ GLOWS NEÓN (para bordes/sombras)
+     =============================== */
+  --glow-primary: 0 0 20px rgba(201, 173, 227, 0.5);
+  --glow-secondary: 0 0 20px rgba(255, 179, 217, 0.5);
+  --glow-accent: 0 0 20px rgba(127, 255, 212, 0.5);
+  --glow-cyan: 0 0 30px rgba(0, 245, 255, 0.6);
+  --glow-purple: 0 0 30px rgba(191, 64, 191, 0.6);
+
+  /* ===============================
+     🌫️ SOMBRAS NEÓN
+     =============================== */
+  --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.7), var(--glow-primary);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.8), var(--glow-primary);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.85), var(--glow-accent);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.9), var(--glow-accent);
+
+  /* ===============================
+     🚨 FUNCIONALES (MUY IMPORTANTE)
+     =============================== */
+  --color-success: #39FF14;        /* verde neón */
+  --color-warning: #FFD700;        /* amarillo neón */
+  --color-error: #FF1744;          /* rojo neón */
+  --color-info: #00F5FF;           /* cyan neón */
+
+  /* ===============================
+     📐 ESPACIADOS
+     =============================== */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+
+  /* ===============================
+     🔲 RADIOS
+     =============================== */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ===============================
+     ⚡ TRANSICIONES
+     =============================== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+}
