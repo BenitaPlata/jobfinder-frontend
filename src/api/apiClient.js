@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'https://jobfinder-backend-production-7244.up.railway.app/api',
 });
 
 // Interceptor para añadir token automáticamente a todas las requests

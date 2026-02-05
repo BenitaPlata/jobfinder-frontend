@@ -156,7 +156,7 @@ frontend/
 │   ├── api/             # Llamadas HTTP (Axios)
 │   ├── components/      # Componentes reutilizables
 │   │   ├── common/      # Navbar, Footer, Skeleton
-│   │   └── jobs/        # JobCard, JobFilters
+│   │   └── Jobs/        # JobCard, JobFilters
 │   ├── context/         # AuthContext (state global)
 │   ├── hooks/           # Custom hooks (useAuth, useJobs)
 │   ├── pages/           # Vistas principales
