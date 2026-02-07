@@ -39,9 +39,8 @@ function AnalyzeCV() {
       const formData = new FormData();
       formData.append('cv', file);
 
-      const response = await fetch('/api/cv/analyze', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/cv/analyze`, {
         method: 'POST',
-        credentials: 'include', 
         body: formData,
       });
 
