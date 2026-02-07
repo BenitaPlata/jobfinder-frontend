@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import apiClient from '../api/apiClient';
 import {
   Container,
   Box,
@@ -44,20 +45,14 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const response = await apiClient.post('/auth/login', formData);
+      const data = response.data;
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Error al iniciar sesión');
+      if (!data || !data.user || !data.token) {
+        throw new Error(data?.message || 'Error al iniciar sesión');
       }
 
       login(data.user, data.token);
-
       toast({
         title: '¡Bienvenido!',
         description: 'Has iniciado sesión correctamente',

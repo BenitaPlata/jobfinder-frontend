@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: import.meta.env.VITE_API_URL || 'https://jobfinder-backend-production-7244.up.railway.app/api',
         changeOrigin: true,
         secure: false,
       },
