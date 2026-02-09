@@ -49,7 +49,7 @@ function AnalyzeCV() {
       }
 
       const data = await response.json();
-      setResult(data);
+      setResult(data.analysis);
     } catch {
       setError('Error analizando el CV. Inténtalo de nuevo.');
     } finally {
