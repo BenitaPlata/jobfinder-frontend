@@ -44,6 +44,8 @@ function Navbar() {
     return null;
   }
 
+  const isAdmin = user?.role === 'ADMIN';
+
   return (
     <Box
       bg="var(--bg-card)"
@@ -119,14 +121,15 @@ function Navbar() {
                   <Text>Sobre mí</Text>
                 </HStack>
 
-                {/* 🔐 ENLACE ADMIN — NUEVO (NO ROMPE NADA) */}
-                {user?.role?.toUpperCase() === 'ADMIN' && (
+                {/* 🔐 ADMIN */}
+                {isAdmin && (
                   <HStack
                     as={Link}
                     to="/admin"
                     spacing={2}
                     color="var(--color-accent)"
                     fontWeight="700"
+                    _hover={{ textShadow: 'var(--glow-accent)' }}
                   >
                     <Shield size={18} />
                     <Text>Admin</Text>
@@ -138,11 +141,7 @@ function Navbar() {
                 <Text fontSize="sm" color="var(--text-tertiary)">
                   Hola, {user?.name}
                 </Text>
-                <Button
-                  size="sm"
-                  onClick={handleLogout}
-                  leftIcon={<LogOut size={16} />}
-                >
+                <Button size="sm" onClick={handleLogout} leftIcon={<LogOut size={16} />}>
                   Cerrar Sesión
                 </Button>
               </HStack>
@@ -163,7 +162,7 @@ function Navbar() {
               <Button as={Link} to="/profile" onClick={onClose}>Mi Perfil</Button>
               <Button as={Link} to="/about" onClick={onClose}>Sobre mí</Button>
 
-              {user?.role?.toUpperCase() === 'ADMIN' && (
+              {isAdmin && (
                 <Button
                   as={Link}
                   to="/admin"
