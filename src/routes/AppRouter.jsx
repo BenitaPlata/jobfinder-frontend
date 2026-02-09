@@ -9,7 +9,7 @@ import ProtectedRoute from '../components/common/ProtectedRoute';
 import Navbar from '../components/common/Navbar';
 import About from '../pages/About';
 import AnalyzeCV from '../pages/AnalyzeCV';
-
+import AdminRoute from '../components/common/AdminRoute';
 
 function AppRouter() {
   return (
@@ -55,9 +55,18 @@ function AppRouter() {
         />
         <Route path="/about" element={<About />} />
         <Route path="/analyze-cv" element={<AnalyzeCV />} />
-
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <div style={{ padding: '2rem' }}>
+                <h1>Admin Panel</h1>
+                <p>Ruta protegida solo para administradores</p>
+              </div>
+            </AdminRoute>
+          }
+        />
       </Routes>
-      
     </>
   );
 }
