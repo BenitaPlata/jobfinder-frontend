@@ -14,7 +14,14 @@ function AuthProvider({ children }) {
         const storedToken = localStorage.getItem('token');
 
         if (storedUser && storedToken) {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+
+          const normalizedUser = {
+            ...parsedUser,
+            role: parsedUser.role?.toUpperCase(),
+          };
+
+          setUser(normalizedUser);
           setToken(storedToken);
         }
       } catch (error) {
@@ -30,17 +37,16 @@ function AuthProvider({ children }) {
   }, []);
 
   const login = (userData, authToken) => {
-  const normalizedUser = {
-    ...userData,
-    role: userData.role?.toUpperCase(),
+    const normalizedUser = {
+      ...userData,
+      role: userData.role?.toUpperCase(),
+    };
+
+    setUser(normalizedUser);
+    setToken(authToken);
+    localStorage.setItem('user', JSON.stringify(normalizedUser));
+    localStorage.setItem('token', authToken);
   };
-
-  setUser(normalizedUser);
-  setToken(authToken);
-  localStorage.setItem('user', JSON.stringify(normalizedUser));
-  localStorage.setItem('token', authToken);
-};
-
 
   const logout = () => {
     setUser(null);
