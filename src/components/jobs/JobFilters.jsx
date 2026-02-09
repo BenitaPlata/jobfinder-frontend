@@ -3,15 +3,16 @@ import {
   Box,
   VStack,
   HStack,
-  Input,
   Select,
   Button,
   FormControl,
   FormLabel,
   Text,
   Checkbox,
+  Input,
 } from '@chakra-ui/react';
 import { MapPin } from 'lucide-react';
+import LocationAutocomplete from './LocationAutocomplete';
 
 function JobFilters({ onFilterChange }) {
   const [filters, setFilters] = useState({
@@ -29,66 +30,16 @@ function JobFilters({ onFilterChange }) {
     useDistance: false,
   });
 
-  const cityCoordinates = {
-    'A Coruña': { lat: 43.3623, lng: -8.4115 },
-    'Álava': { lat: 42.8467, lng: -2.6716 },
-    'Albacete': { lat: 38.9943, lng: -1.8585 },
-    'Alicante': { lat: 38.3452, lng: -0.481 },
-    'Almería': { lat: 36.8381, lng: -2.4597 },
-    'Asturias': { lat: 43.3614, lng: -5.8593 },
-    'Ávila': { lat: 40.6566, lng: -4.6812 },
-    'Badajoz': { lat: 38.8794, lng: -6.9707 },
-    'Barcelona': { lat: 41.3851, lng: 2.1734 },
-    'Burgos': { lat: 42.3439, lng: -3.6969 },
-    'Cáceres': { lat: 39.4753, lng: -6.3724 },
-    'Cádiz': { lat: 36.5271, lng: -6.2886 },
-    'Cantabria': { lat: 43.4623, lng: -3.8099 },
-    'Castellón': { lat: 39.9864, lng: -0.0513 },
-    'Ceuta': { lat: 35.8894, lng: -5.3213 },
-    'Ciudad Real': { lat: 38.9848, lng: -3.9273 },
-    'Córdoba': { lat: 37.8882, lng: -4.7794 },
-    'Cuenca': { lat: 40.0704, lng: -2.1374 },
-    'Girona': { lat: 41.9794, lng: 2.8214 },
-    'Granada': { lat: 37.1773, lng: -3.5986 },
-    'Guadalajara': { lat: 40.6318, lng: -3.1662 },
-    'Guipúzcoa': { lat: 43.3183, lng: -1.9812 },
-    'Huelva': { lat: 37.2614, lng: -6.9447 },
-    'Huesca': { lat: 42.1401, lng: -0.4079 },
-    'Islas Baleares': { lat: 39.5696, lng: 2.6502 },
-    'Jaén': { lat: 37.7796, lng: -3.7849 },
-    'La Rioja': { lat: 42.4627, lng: -2.4449 },
-    'Las Palmas': { lat: 28.1248, lng: -15.43 },
-    'León': { lat: 42.5987, lng: -5.567 },
-    'Lleida': { lat: 41.6175, lng: 0.6201 },
-    'Lugo': { lat: 43.0097, lng: -7.5567 },
-    'Madrid': { lat: 40.4168, lng: -3.7038 },
-    'Málaga': { lat: 36.7213, lng: -4.4214 },
-    'Melilla': { lat: 35.2923, lng: -2.9381 },
-    'Murcia': { lat: 37.9922, lng: -1.1307 },
-    'Navarra': { lat: 42.8125, lng: -1.6458 },
-    'Ourense': { lat: 42.3406, lng: -7.8632 },
-    'Palencia': { lat: 42.0095, lng: -4.5288 },
-    'Pontevedra': { lat: 42.43, lng: -8.6446 },
-    'Salamanca': { lat: 40.9701, lng: -5.6635 },
-    'Segovia': { lat: 40.9429, lng: -4.1088 },
-    'Sevilla': { lat: 37.3891, lng: -5.9845 },
-    'Soria': { lat: 41.7665, lng: -2.479 },
-    'Tarragona': { lat: 41.1189, lng: 1.2445 },
-    'Santa Cruz de Tenerife': { lat: 28.4636, lng: -16.2518 },
-    'Teruel': { lat: 40.3456, lng: -1.1065 },
-    'Toledo': { lat: 39.8628, lng: -4.0273 },
-    'Valencia': { lat: 39.4699, lng: -0.3763 },
-    'Valladolid': { lat: 41.6523, lng: -4.7245 },
-    'Vizcaya': { lat: 43.263, lng: -2.935 },
-    'Zamora': { lat: 41.5034, lng: -5.7467 },
-    'Zaragoza': { lat: 41.6488, lng: -0.8891 },
-  };
-
   const handleChange = (field, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [field]: value,
     }));
+  };
+
+  const handleLocationSelect = (cityName, lat, lng) => {
+    handleChange('userLat', lat);
+    handleChange('userLng', lng);
   };
 
   const handleApplyFilters = () => {
@@ -181,12 +132,14 @@ function JobFilters({ onFilterChange }) {
           <FormLabel color="var(--text-secondary)" fontWeight="600">
             Ciudad
           </FormLabel>
-          <Input
+          <LocationAutocomplete
             value={filters.city}
-            onChange={(e) => handleChange('city', e.target.value)}
-            placeholder="Madrid, Barcelona..."
-            {...inputStyles}
+            onChange={(value) => handleChange('city', value)}
+            placeholder="Escribe cualquier ciudad o pueblo de España..."
           />
+          <Text fontSize="xs" color="var(--text-tertiary)" mt={1}>
+            Escribe al menos 3 letras para ver sugerencias
+          </Text>
         </FormControl>
 
         <HStack spacing={4}>
@@ -350,30 +303,19 @@ function JobFilters({ onFilterChange }) {
               </Button>
 
               <Text fontSize="sm" color="var(--text-tertiary)" textAlign="center">
-                o selecciona tu ciudad:
+                o busca tu ciudad:
               </Text>
 
               <FormControl>
                 <FormLabel color="var(--text-secondary)" fontWeight="600">
                   Mi ciudad
                 </FormLabel>
-                <Select
-                  placeholder="Selecciona tu ciudad"
-                  {...selectStyles}
-                  onChange={(e) => {
-                    const city = e.target.value;
-                    if (city && cityCoordinates[city]) {
-                      handleChange('userLat', cityCoordinates[city].lat);
-                      handleChange('userLng', cityCoordinates[city].lng);
-                    }
-                  }}
-                >
-                  {Object.keys(cityCoordinates).map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </Select>
+                <LocationAutocomplete
+                  value=""
+                  onChange={handleLocationSelect}
+                  placeholder="Escribe tu ciudad..."
+                  returnCoordinates={true}
+                />
               </FormControl>
 
               {filters.userLat && filters.userLng && (
