@@ -120,7 +120,7 @@ function Navbar() {
                 </HStack>
 
                 {/* 🔐 ENLACE ADMIN — NUEVO (NO ROMPE NADA) */}
-                {user?.role === 'ADMIN' && (
+                {user?.role?.toUpperCase() === 'ADMIN' && (
                   <HStack
                     as={Link}
                     to="/admin"
@@ -163,7 +163,7 @@ function Navbar() {
               <Button as={Link} to="/profile" onClick={onClose}>Mi Perfil</Button>
               <Button as={Link} to="/about" onClick={onClose}>Sobre mí</Button>
 
-              {user?.role === 'ADMIN' && (
+              {user?.role?.toUpperCase() === 'ADMIN' && (
                 <Button
                   as={Link}
                   to="/admin"
