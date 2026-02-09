@@ -10,6 +10,9 @@ import Navbar from '../components/common/Navbar';
 import About from '../pages/About';
 import AnalyzeCV from '../pages/AnalyzeCV';
 import AdminRoute from '../components/common/AdminRoute';
+import AdminLayout from '../pages/admin/AdminLayout';
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminUsers from '../pages/admin/AdminUsers';
 
 function AppRouter() {
   return (
@@ -54,18 +57,20 @@ function AppRouter() {
           }
         />
         <Route path="/about" element={<About />} />
+
         <Route path="/analyze-cv" element={<AnalyzeCV />} />
+
         <Route
           path="/admin"
           element={
             <AdminRoute>
-              <div style={{ padding: '2rem' }}>
-                <h1>Admin Panel</h1>
-                <p>Ruta protegida solo para administradores</p>
-              </div>
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+        </Route>
       </Routes>
     </>
   );
