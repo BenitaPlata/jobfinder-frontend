@@ -13,11 +13,8 @@ import { motion } from 'framer-motion';
 import {
   Briefcase,
   Github,
-  MapPin,
-  Target,
-  TrendingUp,
-  Rocket,
   ExternalLink,
+  TrendingUp,
 } from 'lucide-react';
 
 const MotionBox = motion(Box);
@@ -30,41 +27,25 @@ function About() {
     };
   }, []);
 
-  const features = [
+  const journey = [
     {
-      icon: Target,
-      color: 'var(--color-primary)',
-      title: 'Ofertas Tech Reales',
+      period: '2002 – 2024',
+      title: 'Gestión, administración y marketing',
       description:
-        'Ofertas actualizadas diariamente del sector tecnológico español',
+        'Más de 15 años de experiencia profesional desarrollando habilidades clave como comunicación, organización, trabajo en equipo y orientación a resultados.',
     },
     {
-      icon: MapPin,
-      color: 'var(--color-accent)',
-      title: 'Búsqueda por Ubicación',
-      description: 'Filtra ofertas por ciudad o distancia',
+      period: '2024',
+      title: 'Transición al desarrollo web',
+      description:
+        'Inicio del camino en el desarrollo web, descubriendo una vocación clara por la tecnología y la creación de productos digitales.',
     },
     {
-      icon: TrendingUp,
-      color: 'var(--color-secondary)',
-      title: 'Salarios Transparentes',
-      description: 'Rangos salariales claros y visibles',
+      period: '2024 – Actualidad',
+      title: 'Formación técnica especializada',
+      description:
+        'Grado Superior en Desarrollo de Aplicaciones Web y formación continua en desarrollo web moderno e inteligencia artificial aplicada a producto.',
     },
-    {
-      icon: Rocket,
-      color: 'var(--color-accent)',
-      title: 'Ecosistema Tech',
-      description: 'Startups y grandes empresas tecnológicas',
-    },
-  ];
-
-  const timeline = [
-    { year: '2026 - 2027', event: 'Máster en IA e Innovación (Founderz)' },
-    { year: '2024 - 2026', event: 'Máster de Desarrollo Web (UCAM)' },
-    { year: '2024 - 2026', event: 'CFGS Desarrollo de Aplicaciones Web' },
-    { year: '2024', event: 'Inicio en desarrollo web' },
-    { year: '2022', event: 'Marketing digital y community management' },
-    { year: '2002 - 2024', event: '+15 años en entorno profesional' },
   ];
 
   return (
@@ -78,15 +59,23 @@ function About() {
       >
         <Container maxW="container.xl">
           <VStack spacing={4} textAlign="center">
-            <Heading fontSize={{ base: '4xl', md: '6xl' }} fontWeight="900">
+            <Heading
+              fontSize={{ base: '4xl', md: '5xl' }}
+              fontWeight="900"
+              color="var(--text-primary)"
+            >
               Sobre{' '}
               <Box as="span" color="var(--color-primary)">
                 JobFinder
               </Box>
             </Heading>
-            <Text fontSize="lg" color="var(--text-secondary)" maxW="2xl">
-              Plataforma de empleo tecnológico enfocada en claridad, datos reales
-              y experiencia de usuario
+            <Text
+              fontSize="lg"
+              maxW="2xl"
+              color="var(--text-secondary)"
+            >
+              Proyecto de búsqueda de empleo tecnológico enfocado en claridad,
+              datos reales y experiencia de usuario.
             </Text>
           </VStack>
         </Container>
@@ -94,117 +83,149 @@ function About() {
 
       <Container maxW="container.xl" py={16}>
         <VStack spacing={20} align="stretch">
-          {/* SOBRE LA CREADORA */}
-          <MotionBox>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12}>
-              <Image
-                src="/images/benita.webp"
-                alt="Benita Plata"
-                borderRadius="24px"
-                maxW="400px"
-                mx="auto"
-              />
 
-              <VStack align="start" spacing={5}>
+          {/* PERFIL */}
+          <MotionBox
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12} alignItems="center">
+              <Box>
+                <Image
+                  src="/images/benita.webp"
+                  alt="Benita Plata"
+                  borderRadius="24px"
+                  boxShadow="var(--shadow-lg)"
+                  maxW="420px"
+                  mx="auto"
+                />
+              </Box>
+
+              <VStack align="start" spacing={6}>
                 <Heading size="2xl">Benita Plata</Heading>
-                <Text color="var(--text-secondary)" fontSize="lg">
-                  Desarrolladora web enfocada en crear productos digitales
-                  funcionales, claros y con una base técnica sólida.
-                </Text>
-                <Text color="var(--text-secondary)" fontSize="lg">
-                  Actualmente en formación continua en desarrollo web e
-                  inteligencia artificial aplicada a producto.
+
+                <Text fontSize="lg" color="var(--text-secondary)" lineHeight="1.8">
+                  Desarrolladora web enfocada en crear productos digitales claros,
+                  funcionales y con una base técnica sólida.
                 </Text>
 
-                <HStack spacing={6}>
-                  <a
+                <Text fontSize="lg" color="var(--text-secondary)" lineHeight="1.8">
+                  Actualmente en formación continua en desarrollo web e inteligencia
+                  artificial aplicada a producto, con especial interés en frontend,
+                  experiencia de usuario y aplicaciones reales.
+                </Text>
+
+                <HStack spacing={6} pt={4}>
+                  <HStack
+                    as="a"
                     href="https://portfolio-benitaplata.vercel.app/"
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <ExternalLink />
-                  </a>
-                  <a
+                    <Text>Portfolio</Text>
+                  </HStack>
+
+                  <HStack
+                    as="a"
                     href="https://github.com/BenitaPlata"
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <Github />
-                  </a>
-                  <a
+                    <Text>GitHub</Text>
+                  </HStack>
+
+                  <HStack
+                    as="a"
                     href="https://www.linkedin.com/in/benita-plata/"
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <Briefcase />
-                  </a>
+                    <Text>LinkedIn</Text>
+                  </HStack>
                 </HStack>
               </VStack>
             </SimpleGrid>
           </MotionBox>
 
-          {/* TIMELINE */}
-          <VStack spacing={8}>
-            <Heading size="2xl">Trayectoria</Heading>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-              {timeline.map((item, i) => (
-                <Box
-                  key={i}
-                  bg="var(--bg-card)"
-                  p={6}
-                  borderRadius="16px"
-                  border="1px solid"
-                  borderColor="var(--bg-tertiary)"
-                >
-                  <Text fontWeight="700" color="var(--color-primary)">
-                    {item.year}
-                  </Text>
-                  <Text color="var(--text-secondary)">{item.event}</Text>
-                </Box>
-              ))}
-            </SimpleGrid>
-          </VStack>
+          {/* EVOLUCIÓN PROFESIONAL */}
+          <MotionBox
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <VStack spacing={10}>
+              <VStack spacing={2} textAlign="center">
+                <TrendingUp size={32} />
+                <Heading size="xl">Evolución profesional</Heading>
+                <Text color="var(--text-secondary)" maxW="2xl">
+                  Un recorrido progresivo hacia el desarrollo web y la creación
+                  de productos digitales.
+                </Text>
+              </VStack>
 
-          {/* FEATURES */}
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
-            {features.map((f, i) => (
-              <Box
-                key={i}
-                bg="var(--bg-card)"
-                p={8}
-                borderRadius="20px"
-                textAlign="center"
-              >
-                <Box as={f.icon} size={32} mx="auto" mb={4} color={f.color} />
-                <Heading size="md">{f.title}</Heading>
-                <Text color="var(--text-secondary)">{f.description}</Text>
-              </Box>
-            ))}
-          </SimpleGrid>
+              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+                {journey.map((item, index) => (
+                  <Box
+                    key={index}
+                    bg="var(--bg-card)"
+                    p={6}
+                    borderRadius="16px"
+                    border="1px solid"
+                    borderColor="var(--bg-tertiary)"
+                    boxShadow="var(--shadow-sm)"
+                  >
+                    <Text
+                      fontSize="sm"
+                      fontWeight="700"
+                      color="var(--color-primary)"
+                      mb={2}
+                    >
+                      {item.period}
+                    </Text>
+                    <Heading size="md" mb={2}>
+                      {item.title}
+                    </Heading>
+                    <Text color="var(--text-secondary)">
+                      {item.description}
+                    </Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            </VStack>
+          </MotionBox>
 
           {/* CONTACTO */}
           <Box
             bg="var(--bg-card)"
             p={12}
             borderRadius="24px"
+            border="1px solid"
+            borderColor="var(--bg-tertiary)"
             textAlign="center"
           >
-            <Heading size="lg">Contacto</Heading>
-            <Text color="var(--text-secondary)" mt={2}>
-              Puedes contactarme directamente en:
-            </Text>
-            <Text
-              mt={4}
-              fontSize="lg"
-              fontWeight="600"
-              color="var(--color-primary)"
-            >
-              📧 itaplata.n@gmail.com
-            </Text>
-            <Text fontSize="sm" color="var(--text-tertiary)" mt={2}>
-              O a través de LinkedIn, GitHub o mi portfolio
-            </Text>
+            <VStack spacing={4}>
+              <Heading size="lg">Contacto</Heading>
+              <Text color="var(--text-secondary)">
+                Puedes contactar conmigo directamente en:
+              </Text>
+
+              <Text
+                fontSize="lg"
+                fontWeight="600"
+                color="var(--color-primary)"
+              >
+                📧 itaplata.n@gmail.com
+              </Text>
+
+              <Text fontSize="sm" color="var(--text-tertiary)">
+                O a través de LinkedIn, GitHub o mi portfolio.
+              </Text>
+            </VStack>
           </Box>
+
         </VStack>
       </Container>
     </Box>
