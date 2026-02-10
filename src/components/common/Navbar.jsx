@@ -11,9 +11,9 @@ import {
   DrawerOverlay,
   DrawerContent,
   VStack,
+  Divider,
   useDisclosure,
   useBreakpointValue,
-  Divider,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -34,74 +34,75 @@ function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  if (!isAuthenticated) return null;
-
-  const isAdmin = user?.role === 'ADMIN';
-
   const handleLogout = () => {
     logout();
     navigate('/login');
     onClose();
   };
 
+  if (!isAuthenticated) return null;
+
+  const isAdmin = user?.role === 'ADMIN';
+
   return (
     <Box
       bg="var(--bg-card)"
       borderBottom="1px solid"
       borderColor="var(--bg-tertiary)"
+      boxShadow="var(--shadow-sm)"
       position="sticky"
       top={0}
       zIndex={1000}
       backdropFilter="blur(10px)"
     >
-      <Container maxW="1400px" py={4}>
-        {/* 🔝 FILA SUPERIOR */}
-        <Flex
-          direction="column"
-          align="center"
-          gap={2}
-        >
-          <Text
-            fontSize="3xl"
-            fontWeight="900"
-            color="var(--color-primary)"
-            textShadow="var(--glow-primary)"
-            cursor="pointer"
-            onClick={() => navigate('/')}
-          >
-            JobFinder
-          </Text>
+      <Container maxW="1400px" px={4} py={4}>
+        {/* ===== FILA SUPERIOR ===== */}
+        <Flex align="center" justify="space-between">
+          <Box w="200px" /> {/* spacer izquierdo */}
 
-          <HStack spacing={6}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Text
+              fontSize="3xl"
+              fontWeight="900"
+              color="var(--color-primary)"
+              textShadow="var(--glow-primary)"
+              textAlign="center"
+            >
+              JobFinder
+            </Text>
+          </Link>
+
+          <VStack align="flex-end" spacing={1} w="200px">
             <Text fontSize="sm" color="var(--text-tertiary)">
               Hola, {user?.name}
             </Text>
-
             <Button
               size="sm"
               variant="outline"
-              leftIcon={<LogOut size={16} />}
               onClick={handleLogout}
+              leftIcon={<LogOut size={14} />}
             >
               Cerrar sesión
             </Button>
-          </HStack>
+          </VStack>
         </Flex>
 
         <Divider my={4} />
 
-        {/* 🔽 FILA INFERIOR */}
+        {/* ===== FILA INFERIOR ===== */}
         {isMobile ? (
           <Flex justify="flex-end">
             <IconButton
               icon={<Menu size={24} />}
               onClick={onOpen}
               variant="ghost"
-              aria-label="Abrir menú"
+              aria-label="Open menu"
             />
           </Flex>
         ) : (
-          <Flex justify="center">
+          <Flex justify="space-between" align="center">
+            <Box w="200px" /> {/* spacer */}
+
             <HStack spacing={10} fontWeight="600">
               <HStack as={Link} to="/" spacing={2}>
                 <Briefcase size={18} />
@@ -125,9 +126,11 @@ function Navbar() {
 
               <HStack as={Link} to="/about" spacing={2}>
                 <Info size={18} />
-                <Text>Sobre mí</Text>
+                <Text>Sobre el proyecto</Text>
               </HStack>
+            </HStack>
 
+            <Box w="200px" textAlign="right">
               {isAdmin && (
                 <HStack
                   as={Link}
@@ -140,12 +143,12 @@ function Navbar() {
                   <Text>Admin</Text>
                 </HStack>
               )}
-            </HStack>
+            </Box>
           </Flex>
         )}
       </Container>
 
-      {/* 📱 DRAWER MOBILE */}
+      {/* ===== MOBILE DRAWER ===== */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent bg="var(--bg-card)">
@@ -155,19 +158,15 @@ function Navbar() {
               <Button as={Link} to="/my-applications" onClick={onClose}>Mis candidaturas</Button>
               <Button as={Link} to="/analyze-cv" onClick={onClose}>Analizar CV</Button>
               <Button as={Link} to="/profile" onClick={onClose}>Mi perfil</Button>
-              <Button as={Link} to="/about" onClick={onClose}>Sobre mí</Button>
+              <Button as={Link} to="/about" onClick={onClose}>Sobre el proyecto</Button>
 
               {isAdmin && (
-                <Button as={Link} to="/admin" onClick={onClose}>
+                <Button as={Link} to="/admin" onClick={onClose} leftIcon={<Shield size={18} />}>
                   Admin
                 </Button>
               )}
 
-              <Button
-                mt={6}
-                onClick={handleLogout}
-                leftIcon={<LogOut size={16} />}
-              >
+              <Button mt={6} onClick={handleLogout} leftIcon={<LogOut size={16} />}>
                 Cerrar sesión
               </Button>
             </VStack>
