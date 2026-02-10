@@ -26,16 +26,16 @@ function AdminDashboard() {
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const [users, jobs, applications] = await Promise.all([
+        const [usersRes, jobsRes, applicationsRes] = await Promise.all([
           getAllUsers(),
           getJobsRequest(),
           getAllApplicationsAdminRequest(),
         ]);
 
         setStats({
-          users: users.length,
-          jobs: jobs.length,
-          applications: applications.length,
+          users: usersRes?.users?.length ?? 0,
+          jobs: jobsRes?.jobs?.length ?? jobsRes?.length ?? 0,
+          applications: applicationsRes?.applications?.length ?? 0,
         });
       } catch (error) {
         console.error('❌ Error cargando estadísticas admin:', error);
