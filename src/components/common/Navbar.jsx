@@ -150,11 +150,12 @@ function Navbar() {
                 size="sm"
                 onClick={handleLogout}
                 leftIcon={<LogOut size={14} />}
-                bg="var(--color-primary)"
-                color="var(--bg-primary)"
+                bg="#C9ADE3"
+                color="#0a0a0f"
                 _hover={{
-                  bg: 'var(--color-accent)',
-                  boxShadow: 'var(--glow-accent)',
+                  bg: '#7FFFD4',
+                  color: '#0a0a0f',
+                  boxShadow: '0 0 20px rgba(127, 255, 212, 0.5)',
                 }}
               >
                 Cerrar sesión

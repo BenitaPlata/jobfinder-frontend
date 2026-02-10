@@ -7,7 +7,7 @@ function AdminLayout() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // 🔹 estilo único y visible (el mismo que funcionó)
+
   const sidebarButtonProps = {
     variant: 'ghost',
     justifyContent: 'flex-start',
