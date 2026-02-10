@@ -23,3 +23,9 @@ export const deleteApplicationRequest = async (applicationId) => {
   const response = await apiClient.delete(`/applications/${applicationId}`);
   return response.data;
 };
+
+// 🔐 ADMIN — obtener TODAS las candidaturas
+export const getAllApplicationsAdminRequest = async () => {
+  const response = await apiClient.get('/applications/all');
+  return response.data;
+};

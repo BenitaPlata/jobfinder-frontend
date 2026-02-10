@@ -12,7 +12,7 @@ import {
 
 import { getAllUsers } from '../../api/users.api';
 import { getJobsRequest } from '../../api/jobs.api';
-import { getAllApplications } from '../../api/applications.api';
+import { getAllApplicationsAdminRequest } from '../../api/applications.api';
 
 function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -28,8 +28,8 @@ function AdminDashboard() {
       try {
         const [users, jobs, applications] = await Promise.all([
           getAllUsers(),
-          getJobsRequest(),        // 👈 FUNCIÓN CORRECTA
-          getAllApplications(),
+          getJobsRequest(),
+          getAllApplicationsAdminRequest(),
         ]);
 
         setStats({
