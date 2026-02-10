@@ -75,9 +75,15 @@ function Navbar() {
             </Text>
             <Button
               size="sm"
-              variant="outline"
               leftIcon={<LogOut size={16} />}
               onClick={handleLogout}
+              bg="#C9ADE3"
+              color="#0a0a0f"
+              _hover={{
+                bg: '#7FFFD4',
+                color: '#0a0a0f',
+                boxShadow: '0 0 20px rgba(127, 255, 212, 0.5)',
+              }}
             >
               Cerrar sesión
             </Button>
@@ -148,8 +154,8 @@ function Navbar() {
 
               <Button
                 size="sm"
-                onClick={handleLogout}
                 leftIcon={<LogOut size={14} />}
+                onClick={handleLogout}
                 bg="#C9ADE3"
                 color="#0a0a0f"
                 _hover={{
