@@ -112,15 +112,17 @@ function AdminUsers() {
                 <Td>{user.role}</Td>
                 <Td isNumeric>
                   <HStack justify="flex-end">
-                    <Button
-                      size="sm"
-                      colorScheme="red"
-                      variant="outline"
-                      leftIcon={<Trash2 size={16} />}
-                      onClick={() => handleDelete(user._id, user.name)}
-                    >
-                      Eliminar
-                    </Button>
+                    {user.role !== 'ADMIN' && (
+                      <Button
+                        size="sm"
+                        colorScheme="red"
+                        variant="outline"
+                        leftIcon={<Trash2 size={16} />}
+                        onClick={() => handleDelete(user._id, user.name)}
+                      >
+                        Eliminar
+                      </Button>
+                    )}
                   </HStack>
                 </Td>
               </Tr>

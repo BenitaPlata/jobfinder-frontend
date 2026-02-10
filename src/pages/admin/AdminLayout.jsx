@@ -1,17 +1,18 @@
 import { Box, Flex, VStack, Text, Button } from '@chakra-ui/react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, ArrowLeft } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, ArrowLeft } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 
 function AdminLayout() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const commonButtonStyles = {
+  // 🔹 estilo único y visible (el mismo que funcionó)
+  const sidebarButtonProps = {
     variant: 'ghost',
+    justifyContent: 'flex-start',
     color: 'var(--text-primary)',
     fontWeight: '600',
-    justifyContent: 'flex-start',
     _hover: {
       bg: 'var(--bg-tertiary)',
       color: 'var(--color-accent)',
@@ -28,7 +29,7 @@ function AdminLayout() {
         borderColor="var(--bg-tertiary)"
         p={6}
       >
-        <VStack align="stretch" spacing={6} h="100%">
+        <VStack align="stretch" spacing={6}>
           {/* HEADER */}
           <Box>
             <Text fontSize="lg" fontWeight="800" color="var(--color-accent)">
@@ -39,13 +40,13 @@ function AdminLayout() {
             </Text>
           </Box>
 
-          {/* NAV */}
+          {/* MENU */}
           <VStack align="stretch" spacing={2}>
             <Button
               as={Link}
               to="/admin"
               leftIcon={<LayoutDashboard size={18} />}
-              {...commonButtonStyles}
+              {...sidebarButtonProps}
             >
               Dashboard
             </Button>
@@ -54,19 +55,27 @@ function AdminLayout() {
               as={Link}
               to="/admin/users"
               leftIcon={<Users size={18} />}
-              {...commonButtonStyles}
+              {...sidebarButtonProps}
             >
               Usuarios
             </Button>
+
+            <Button
+              as={Link}
+              to="/admin/jobs"
+              leftIcon={<Briefcase size={18} />}
+              {...sidebarButtonProps}
+            >
+              Ofertas
+            </Button>
           </VStack>
 
-          {/* PUSH BOTTOM */}
           <Box flex={1} />
 
-          {/* BACK */}
+          {/* VOLVER */}
           <Button
             leftIcon={<ArrowLeft size={18} />}
-            {...commonButtonStyles}
+            {...sidebarButtonProps}
             onClick={() => navigate('/')}
           >
             Volver a la app
@@ -74,7 +83,7 @@ function AdminLayout() {
         </VStack>
       </Box>
 
-      {/* CONTENT */}
+      {/* CONTENIDO */}
       <Box flex={1} p={8}>
         <Outlet />
       </Box>
