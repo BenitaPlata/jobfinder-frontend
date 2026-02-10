@@ -59,7 +59,7 @@ function Navbar() {
           <Box w="200px" />
 
           <Text
-            fontSize="3xl"
+            fontSize="4xl"
             fontWeight="900"
             letterSpacing="tight"
             color="var(--color-primary)"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   Box,
   Heading,
@@ -12,24 +12,22 @@ import {
   Spinner,
   Center,
   useToast,
+  HStack,
+  Text,
 } from '@chakra-ui/react';
 import { Trash2 } from 'lucide-react';
-import { getJobsRequest } from '../../api/jobs.api';
-import apiClient from '../../api/apiClient';
+import { getJobsRequest, deleteJobRequest } from '../../api/jobs.api';
 
 function AdminJobs() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
 
-  const loadJobs = async () => {
+  const loadJobs = useCallback(async () => {
     try {
       setLoading(true);
-
-      // ⚠️ pedimos MUCHAS para admin (no paginado visible)
       const data = await getJobsRequest({ limit: 1000 });
-
-      setJobs(data.jobs || []);
+      setJobs(data.jobs || data || []);
     } catch (error) {
       console.error('❌ Error cargando ofertas:', error);
       toast({
@@ -42,23 +40,29 @@ function AdminJobs() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
-  const handleDelete = async (jobId) => {
-    const confirm = window.confirm('¿Seguro que quieres eliminar esta oferta?');
-    if (!confirm) return;
+  useEffect(() => {
+    loadJobs();
+  }, [loadJobs]);
+
+  const handleDelete = async (jobId, jobTitle) => {
+    const confirmDelete = window.confirm(
+      `¿Seguro que quieres eliminar la oferta "${jobTitle}"?\n\nEsta acción NO se puede deshacer.`
+    );
+    if (!confirmDelete) return;
 
     try {
-      await apiClient.delete(`/jobs/${jobId}`);
+      await deleteJobRequest(jobId);
 
       toast({
         title: 'Oferta eliminada',
+        description: `La oferta "${jobTitle}" ha sido eliminada correctamente`,
         status: 'success',
         duration: 2000,
         isClosable: true,
       });
 
-      // recargar listado
       loadJobs();
     } catch (error) {
       console.error('❌ Error eliminando oferta:', error);
@@ -72,10 +76,6 @@ function AdminJobs() {
     }
   };
 
-  useEffect(() => {
-    loadJobs();
-  }, []);
-
   if (loading) {
     return (
       <Center minH="60vh">
@@ -88,37 +88,42 @@ function AdminJobs() {
     <Box>
       <Heading mb={6}>Ofertas</Heading>
 
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Título</Th>
-            <Th>Empresa</Th>
-            <Th>Sector</Th>
-            <Th isNumeric>Acciones</Th>
-          </Tr>
-        </Thead>
-
-        <Tbody>
-          {jobs.map((job) => (
-            <Tr key={job._id}>
-              <Td>{job.title}</Td>
-              <Td>{job.companyName || '-'}</Td>
-              <Td>{job.sector}</Td>
-              <Td isNumeric>
-                <Button
-                  size="sm"
-                  colorScheme="red"
-                  variant="outline"
-                  leftIcon={<Trash2 size={16} />}
-                  onClick={() => handleDelete(job._id)}
-                >
-                  Eliminar
-                </Button>
-              </Td>
+      {jobs.length === 0 ? (
+        <Text color="var(--text-tertiary)">No hay ofertas disponibles.</Text>
+      ) : (
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>Título</Th>
+              <Th>Empresa</Th>
+              <Th>Sector</Th>
+              <Th isNumeric>Acciones</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+          <Tbody>
+            {jobs.map((job) => (
+              <Tr key={job._id}>
+                <Td>{job.title}</Td>
+                <Td>{job.companyName || '-'}</Td>
+                <Td>{job.sector || '-'}</Td>
+                <Td isNumeric>
+                  <HStack justify="flex-end">
+                    <Button
+                      size="sm"
+                      colorScheme="red"
+                      variant="outline"
+                      leftIcon={<Trash2 size={16} />}
+                      onClick={() => handleDelete(job._id, job.title)}
+                    >
+                      Eliminar
+                    </Button>
+                  </HStack>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      )}
     </Box>
   );
 }
