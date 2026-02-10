@@ -146,8 +146,18 @@ function Navbar() {
                 </Button>
               )}
 
-              <Button size="sm" onClick={handleLogout} leftIcon={<LogOut size={16} />}>
-                Cerrar Sesión
+              <Button
+                size="sm"
+                onClick={handleLogout}
+                leftIcon={<LogOut size={14} />}
+                bg="var(--color-primary)"
+                color="var(--bg-primary)"
+                _hover={{
+                  bg: 'var(--color-accent)',
+                  boxShadow: 'var(--glow-accent)',
+                }}
+              >
+                Cerrar sesión
               </Button>
             </VStack>
           </DrawerBody>
