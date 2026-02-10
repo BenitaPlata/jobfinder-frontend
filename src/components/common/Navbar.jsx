@@ -23,32 +23,10 @@ import {
   Info,
   LogOut,
   Menu,
-  X,
   FileSearch,
   Shield,
 } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
-
-function NavItem({ to, icon, label, highlight = false }) {
-  return (
-    <HStack
-      as={Link}
-      to={to}
-      spacing={2}
-      fontWeight="600"
-      color={highlight ? 'var(--color-accent)' : 'var(--text-secondary)'}
-      _hover={{
-        color: 'var(--color-accent)',
-        transform: 'translateY(-1px)',
-      }}
-      transition="all 0.2s ease"
-      whiteSpace="nowrap"
-    >
-      {icon}
-      <Text>{label}</Text>
-    </HStack>
-  );
-}
 
 function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -71,80 +49,103 @@ function Navbar() {
       bg="var(--bg-card)"
       borderBottom="1px solid"
       borderColor="var(--bg-tertiary)"
-      boxShadow="var(--shadow-sm)"
       position="sticky"
       top={0}
       zIndex={1000}
       backdropFilter="blur(10px)"
     >
-      <Container maxW="1400px" px={6} py={4}>
+      <Container maxW="1400px" py={4}>
+        {/* 🔝 FILA SUPERIOR */}
+        <Flex
+          direction="column"
+          align="center"
+          gap={2}
+        >
+          <Text
+            fontSize="3xl"
+            fontWeight="900"
+            color="var(--color-primary)"
+            textShadow="var(--glow-primary)"
+            cursor="pointer"
+            onClick={() => navigate('/')}
+          >
+            JobFinder
+          </Text>
 
-        {/* 🔹 FILA SUPERIOR */}
-        <Flex justify="space-between" align="center" mb={4}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Text
-              fontSize="3xl"
-              fontWeight="900"
-              letterSpacing="tight"
-              color="var(--color-primary)"
-              textShadow="var(--glow-primary)"
-            >
-              JobFinder
+          <HStack spacing={6}>
+            <Text fontSize="sm" color="var(--text-tertiary)">
+              Hola, {user?.name}
             </Text>
-          </Link>
 
-          {!isMobile && (
-            <HStack spacing={4}>
-              <Text fontSize="sm" color="var(--text-tertiary)">
-                Hola, {user?.name}
-              </Text>
-              <Button
-                size="sm"
-                variant="outline"
-                leftIcon={<LogOut size={16} />}
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </Button>
-            </HStack>
-          )}
+            <Button
+              size="sm"
+              variant="outline"
+              leftIcon={<LogOut size={16} />}
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </Button>
+          </HStack>
+        </Flex>
 
-          {isMobile && (
+        <Divider my={4} />
+
+        {/* 🔽 FILA INFERIOR */}
+        {isMobile ? (
+          <Flex justify="flex-end">
             <IconButton
               icon={<Menu size={24} />}
               onClick={onOpen}
               variant="ghost"
               aria-label="Abrir menú"
             />
-          )}
-        </Flex>
+          </Flex>
+        ) : (
+          <Flex justify="center">
+            <HStack spacing={10} fontWeight="600">
+              <HStack as={Link} to="/" spacing={2}>
+                <Briefcase size={18} />
+                <Text>Ofertas</Text>
+              </HStack>
 
-        {!isMobile && <Divider mb={4} />}
+              <HStack as={Link} to="/my-applications" spacing={2}>
+                <FileText size={18} />
+                <Text>Mis candidaturas</Text>
+              </HStack>
 
-        {/* 🔹 FILA INFERIOR */}
-        {!isMobile && (
-          <Flex justify="space-between" align="center">
-            <HStack spacing={10}>
-              <NavItem to="/" icon={<Briefcase size={18} />} label="Ofertas" />
-              <NavItem to="/my-applications" icon={<FileText size={18} />} label="Mis candidaturas" />
-              <NavItem to="/analyze-cv" icon={<FileSearch size={18} />} label="Analizar CV" />
-              <NavItem to="/profile" icon={<User size={18} />} label="Mi perfil" />
-              <NavItem to="/about" icon={<Info size={18} />} label="Sobre mí" />
+              <HStack as={Link} to="/analyze-cv" spacing={2}>
+                <FileSearch size={18} />
+                <Text>Analizar CV</Text>
+              </HStack>
+
+              <HStack as={Link} to="/profile" spacing={2}>
+                <User size={18} />
+                <Text>Mi perfil</Text>
+              </HStack>
+
+              <HStack as={Link} to="/about" spacing={2}>
+                <Info size={18} />
+                <Text>Sobre mí</Text>
+              </HStack>
+
+              {isAdmin && (
+                <HStack
+                  as={Link}
+                  to="/admin"
+                  spacing={2}
+                  color="var(--color-accent)"
+                  fontWeight="700"
+                >
+                  <Shield size={18} />
+                  <Text>Admin</Text>
+                </HStack>
+              )}
             </HStack>
-
-            {isAdmin && (
-              <NavItem
-                to="/admin"
-                icon={<Shield size={18} />}
-                label="Admin"
-                highlight
-              />
-            )}
           </Flex>
         )}
       </Container>
 
-      {/* 📱 MOBILE DRAWER */}
+      {/* 📱 DRAWER MOBILE */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent bg="var(--bg-card)">
@@ -157,20 +158,15 @@ function Navbar() {
               <Button as={Link} to="/about" onClick={onClose}>Sobre mí</Button>
 
               {isAdmin && (
-                <Button
-                  as={Link}
-                  to="/admin"
-                  onClick={onClose}
-                  leftIcon={<Shield size={18} />}
-                >
+                <Button as={Link} to="/admin" onClick={onClose}>
                   Admin
                 </Button>
               )}
 
               <Button
                 mt={6}
-                leftIcon={<LogOut size={16} />}
                 onClick={handleLogout}
+                leftIcon={<LogOut size={16} />}
               >
                 Cerrar sesión
               </Button>
