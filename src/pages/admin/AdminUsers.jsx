@@ -11,9 +11,9 @@ import {
   Button,
   Spinner,
   Center,
+  useToast,
   HStack,
   Text,
-  useToast,
 } from '@chakra-ui/react';
 import { Trash2 } from 'lucide-react';
 
@@ -24,20 +24,19 @@ function AdminUsers() {
   const [loading, setLoading] = useState(true);
   const toast = useToast();
 
-  // 🔹 FUNCIÓN CORRECTA (memorizada)
+  // 🔁 Cargar usuarios
   const loadUsers = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getAllUsers();
-
-      // Tu backend devuelve { users: [...] }
-      setUsers(data.users || []);
+      setUsers(data.users || data);
     } catch (error) {
       console.error('❌ Error cargando usuarios:', error);
       toast({
-        title: 'Error cargando usuarios',
+        title: 'Error',
+        description: 'No se pudieron cargar los usuarios',
         status: 'error',
-        duration: 3000,
+        duration: 4000,
         isClosable: true,
       });
     } finally {
@@ -45,33 +44,37 @@ function AdminUsers() {
     }
   }, [toast]);
 
-  // 🔹 useEffect LIMPIO (sin warning)
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
 
-  // 🔹 BORRAR USUARIO
-  const handleDelete = async (userId) => {
-    const confirm = window.confirm('¿Seguro que quieres eliminar este usuario?');
-    if (!confirm) return;
+  // 🗑️ Eliminar usuario
+  const handleDelete = async (userId, userName) => {
+    const confirmDelete = window.confirm(
+      `¿Seguro que quieres eliminar al usuario "${userName}"?\n\nEsta acción NO se puede deshacer.`
+    );
+
+    if (!confirmDelete) return;
 
     try {
       await deleteUser(userId);
 
       toast({
         title: 'Usuario eliminado',
+        description: `El usuario "${userName}" ha sido eliminado correctamente`,
         status: 'success',
         duration: 3000,
         isClosable: true,
       });
 
-      loadUsers(); // recargar lista
+      loadUsers(); // 🔄 recargar lista
     } catch (error) {
       console.error('❌ Error eliminando usuario:', error);
       toast({
-        title: 'Error eliminando usuario',
+        title: 'Error',
+        description: 'No se pudo eliminar el usuario',
         status: 'error',
-        duration: 3000,
+        duration: 4000,
         isClosable: true,
       });
     }
@@ -86,11 +89,11 @@ function AdminUsers() {
   }
 
   return (
-    <Box px={{ base: 4, md: 8 }} py={6}>
+    <Box>
       <Heading mb={6}>Usuarios</Heading>
 
       {users.length === 0 ? (
-        <Text>No hay usuarios</Text>
+        <Text color="var(--text-tertiary)">No hay usuarios registrados.</Text>
       ) : (
         <Table variant="simple">
           <Thead>
@@ -98,23 +101,23 @@ function AdminUsers() {
               <Th>Nombre</Th>
               <Th>Email</Th>
               <Th>Rol</Th>
-              <Th textAlign="right">Acciones</Th>
+              <Th isNumeric>Acciones</Th>
             </Tr>
           </Thead>
-
           <Tbody>
             {users.map((user) => (
               <Tr key={user._id}>
                 <Td>{user.name}</Td>
                 <Td>{user.email}</Td>
                 <Td>{user.role}</Td>
-                <Td textAlign="right">
+                <Td isNumeric>
                   <HStack justify="flex-end">
                     <Button
                       size="sm"
                       colorScheme="red"
+                      variant="outline"
                       leftIcon={<Trash2 size={16} />}
-                      onClick={() => handleDelete(user._id)}
+                      onClick={() => handleDelete(user._id, user.name)}
                     >
                       Eliminar
                     </Button>

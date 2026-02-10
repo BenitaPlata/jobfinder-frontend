@@ -17,7 +17,8 @@ function AdminLayout() {
         borderColor="var(--bg-tertiary)"
         p={6}
       >
-        <VStack align="stretch" spacing={6}>
+        <VStack align="stretch" spacing={6} h="100%">
+          {/* HEADER */}
           <Box>
             <Text fontSize="lg" fontWeight="800" color="var(--color-accent)">
               Admin Panel
@@ -27,6 +28,7 @@ function AdminLayout() {
             </Text>
           </Box>
 
+          {/* NAV */}
           <VStack align="stretch" spacing={2}>
             <Button
               as={Link}
@@ -49,19 +51,21 @@ function AdminLayout() {
             </Button>
           </VStack>
 
+          {/* PUSH BOTTOM */}
           <Box flex={1} />
 
+          {/* VOLVER A LA APP */}
           <Button
             leftIcon={<ArrowLeft size={18} />}
             variant="ghost"
-            color="var(--text-primary)"
-            fontWeight="600"
             justifyContent="flex-start"
-            onClick={() => navigate('/')}
+            fontWeight="600"
+            color="var(--text-secondary)"
             _hover={{
               bg: 'var(--bg-tertiary)',
               color: 'var(--color-accent)',
             }}
+            onClick={() => navigate('/')}
           >
             Volver a la app
           </Button>

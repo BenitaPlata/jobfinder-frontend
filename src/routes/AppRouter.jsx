@@ -14,6 +14,7 @@ import AdminLayout from '../pages/admin/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminUsers from '../pages/admin/AdminUsers';
 
+
 function AppRouter() {
   return (
     <>
@@ -70,6 +71,15 @@ function AppRouter() {
         >
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />
+
+          <Route
+            path="/admin/users"
+            element={
+              <AdminRoute>
+                <AdminUsers />
+              </AdminRoute>
+            }
+          />
         </Route>
       </Routes>
     </>
