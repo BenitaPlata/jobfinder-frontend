@@ -146,8 +146,8 @@ function Navbar() {
                 </Button>
               )}
 
-              <Button mt={4} onClick={handleLogout} leftIcon={<LogOut size={16} />}>
-                Cerrar sesión
+              <Button size="sm" onClick={handleLogout} leftIcon={<LogOut size={16} />}>
+                Cerrar Sesión
               </Button>
             </VStack>
           </DrawerBody>

@@ -38,7 +38,7 @@ function About() {
       period: '2024',
       title: 'Transición al desarrollo web',
       description:
-        'Inicio del camino en el desarrollo web, descubriendo una vocación clara por la tecnología y la creación de productos digitales.',
+        'Inicio del camino en el desarrollo web, descubriendo una vocación clara por la tecnología, la creación de productos digitales y el interés temprano por la automatización y la inteligencia artificial.',
     },
     {
       period: '2024 – Actualidad',
