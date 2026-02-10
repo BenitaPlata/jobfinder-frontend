@@ -7,6 +7,17 @@ function AdminLayout() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const commonButtonStyles = {
+    variant: 'ghost',
+    color: 'var(--text-primary)',
+    fontWeight: '600',
+    justifyContent: 'flex-start',
+    _hover: {
+      bg: 'var(--bg-tertiary)',
+      color: 'var(--color-accent)',
+    },
+  };
+
   return (
     <Flex minH="calc(100vh - 120px)">
       {/* SIDEBAR */}
@@ -33,9 +44,8 @@ function AdminLayout() {
             <Button
               as={Link}
               to="/admin"
-              justifyContent="flex-start"
               leftIcon={<LayoutDashboard size={18} />}
-              variant="ghost"
+              {...commonButtonStyles}
             >
               Dashboard
             </Button>
@@ -43,9 +53,8 @@ function AdminLayout() {
             <Button
               as={Link}
               to="/admin/users"
-              justifyContent="flex-start"
               leftIcon={<Users size={18} />}
-              variant="ghost"
+              {...commonButtonStyles}
             >
               Usuarios
             </Button>
@@ -54,17 +63,10 @@ function AdminLayout() {
           {/* PUSH BOTTOM */}
           <Box flex={1} />
 
-          {/* VOLVER A LA APP */}
+          {/* BACK */}
           <Button
             leftIcon={<ArrowLeft size={18} />}
-            variant="ghost"
-            justifyContent="flex-start"
-            fontWeight="600"
-            color="var(--text-secondary)"
-            _hover={{
-              bg: 'var(--bg-tertiary)',
-              color: 'var(--color-accent)',
-            }}
+            {...commonButtonStyles}
             onClick={() => navigate('/')}
           >
             Volver a la app
@@ -72,7 +74,7 @@ function AdminLayout() {
         </VStack>
       </Box>
 
-      {/* CONTENIDO */}
+      {/* CONTENT */}
       <Box flex={1} p={8}>
         <Outlet />
       </Box>
