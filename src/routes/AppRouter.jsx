@@ -13,7 +13,7 @@ import AdminRoute from '../components/common/AdminRoute';
 import AdminLayout from '../pages/admin/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminUsers from '../pages/admin/AdminUsers';
-
+import AdminJobs from '../pages/admin/AdminJobs';
 
 function AppRouter() {
   return (
@@ -58,9 +58,9 @@ function AppRouter() {
           }
         />
         <Route path="/about" element={<About />} />
-
         <Route path="/analyze-cv" element={<AnalyzeCV />} />
 
+        {/* Rutas admin */}
         <Route
           path="/admin"
           element={
@@ -71,15 +71,7 @@ function AppRouter() {
         >
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />
-
-          <Route
-            path="/admin/users"
-            element={
-              <AdminRoute>
-                <AdminUsers />
-              </AdminRoute>
-            }
-          />
+          <Route path="jobs" element={<AdminJobs />} />
         </Route>
       </Routes>
     </>
