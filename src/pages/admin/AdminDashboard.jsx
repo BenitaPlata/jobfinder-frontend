@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 import { getAllUsers } from '../../api/users.api';
-import { getJobs } from '../../api/jobs.api';
+import { getJobsRequest } from '../../api/jobs.api';
 import { getAllApplications } from '../../api/applications.api';
 
 function AdminDashboard() {
@@ -28,7 +28,7 @@ function AdminDashboard() {
       try {
         const [users, jobs, applications] = await Promise.all([
           getAllUsers(),
-          getJobs(),
+          getJobsRequest(),        // 👈 FUNCIÓN CORRECTA
           getAllApplications(),
         ]);
 
@@ -60,32 +60,17 @@ function AdminDashboard() {
       <Heading mb={6}>Admin Panel</Heading>
 
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-        <Stat
-          p={6}
-          borderRadius="xl"
-          bg="var(--bg-card)"
-          boxShadow="var(--shadow-sm)"
-        >
+        <Stat p={6} bg="var(--bg-card)" borderRadius="xl">
           <StatLabel>Usuarios</StatLabel>
           <StatNumber>{stats.users}</StatNumber>
         </Stat>
 
-        <Stat
-          p={6}
-          borderRadius="xl"
-          bg="var(--bg-card)"
-          boxShadow="var(--shadow-sm)"
-        >
+        <Stat p={6} bg="var(--bg-card)" borderRadius="xl">
           <StatLabel>Ofertas</StatLabel>
           <StatNumber>{stats.jobs}</StatNumber>
         </Stat>
 
-        <Stat
-          p={6}
-          borderRadius="xl"
-          bg="var(--bg-card)"
-          boxShadow="var(--shadow-sm)"
-        >
+        <Stat p={6} bg="var(--bg-card)" borderRadius="xl">
           <StatLabel>Candidaturas</StatLabel>
           <StatNumber>{stats.applications}</StatNumber>
         </Stat>
