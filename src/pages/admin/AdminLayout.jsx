@@ -53,8 +53,15 @@ function AdminLayout() {
 
           <Button
             leftIcon={<ArrowLeft size={18} />}
-            variant="outline"
+            variant="ghost"
+            color="var(--text-primary)"
+            fontWeight="600"
+            justifyContent="flex-start"
             onClick={() => navigate('/')}
+            _hover={{
+              bg: 'var(--bg-tertiary)',
+              color: 'var(--color-accent)',
+            }}
           >
             Volver a la app
           </Button>
