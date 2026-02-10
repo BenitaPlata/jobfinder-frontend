@@ -13,6 +13,7 @@ import {
   VStack,
   useDisclosure,
   useBreakpointValue,
+  Divider,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -28,11 +29,36 @@ import {
 } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 
+function NavItem({ to, icon, label, highlight = false }) {
+  return (
+    <HStack
+      as={Link}
+      to={to}
+      spacing={2}
+      fontWeight="600"
+      color={highlight ? 'var(--color-accent)' : 'var(--text-secondary)'}
+      _hover={{
+        color: 'var(--color-accent)',
+        transform: 'translateY(-1px)',
+      }}
+      transition="all 0.2s ease"
+      whiteSpace="nowrap"
+    >
+      {icon}
+      <Text>{label}</Text>
+    </HStack>
+  );
+}
+
 function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
+
+  if (!isAuthenticated) return null;
+
+  const isAdmin = user?.role === 'ADMIN';
 
   const handleLogout = () => {
     logout();
@@ -40,114 +66,82 @@ function Navbar() {
     onClose();
   };
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  const isAdmin = user?.role === 'ADMIN';
-
   return (
     <Box
       bg="var(--bg-card)"
       borderBottom="1px solid"
       borderColor="var(--bg-tertiary)"
       boxShadow="var(--shadow-sm)"
-      py={4}
-      mb={8}
       position="sticky"
       top={0}
       zIndex={1000}
       backdropFilter="blur(10px)"
     >
-      <Container maxW="1400px" px={4}>
-        <Flex justify="space-between" align="center">
+      <Container maxW="1400px" px={6} py={4}>
+
+        {/* 🔹 FILA SUPERIOR */}
+        <Flex justify="space-between" align="center" mb={4}>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <Text
-              fontSize="2xl"
+              fontSize="3xl"
               fontWeight="900"
               letterSpacing="tight"
               color="var(--color-primary)"
               textShadow="var(--glow-primary)"
-              cursor="pointer"
-              _hover={{
-                color: 'var(--color-accent)',
-                textShadow: 'var(--glow-accent)',
-                transform: 'scale(1.05)',
-              }}
-              transition="all 0.2s ease"
-              whiteSpace="nowrap"
             >
               JobFinder
             </Text>
           </Link>
 
-          {isMobile ? (
+          {!isMobile && (
+            <HStack spacing={4}>
+              <Text fontSize="sm" color="var(--text-tertiary)">
+                Hola, {user?.name}
+              </Text>
+              <Button
+                size="sm"
+                variant="outline"
+                leftIcon={<LogOut size={16} />}
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </Button>
+            </HStack>
+          )}
+
+          {isMobile && (
             <IconButton
               icon={<Menu size={24} />}
               onClick={onOpen}
               variant="ghost"
-              color="var(--text-primary)"
-              _hover={{
-                bg: 'var(--bg-tertiary)',
-                color: 'var(--color-accent)',
-              }}
-              aria-label="Open menu"
+              aria-label="Abrir menú"
             />
-          ) : (
-            <>
-              <HStack spacing={10} whiteSpace="nowrap">
-                <HStack as={Link} to="/" spacing={2} color="var(--text-secondary)" fontWeight="600">
-                  <Briefcase size={18} />
-                  <Text>Ofertas</Text>
-                </HStack>
-
-                <HStack as={Link} to="/my-applications" spacing={2} color="var(--text-secondary)" fontWeight="600">
-                  <FileText size={18} />
-                  <Text>Mis Candidaturas</Text>
-                </HStack>
-
-                <HStack as={Link} to="/analyze-cv" spacing={2} color="var(--text-secondary)" fontWeight="600">
-                  <FileSearch size={18} />
-                  <Text>Analizar CV</Text>
-                </HStack>
-
-                <HStack as={Link} to="/profile" spacing={2} color="var(--text-secondary)" fontWeight="600">
-                  <User size={18} />
-                  <Text>Mi Perfil</Text>
-                </HStack>
-
-                <HStack as={Link} to="/about" spacing={2} color="var(--text-secondary)" fontWeight="600">
-                  <Info size={18} />
-                  <Text>Sobre mí</Text>
-                </HStack>
-
-                {/* 🔐 ADMIN */}
-                {isAdmin && (
-                  <HStack
-                    as={Link}
-                    to="/admin"
-                    spacing={2}
-                    color="var(--color-accent)"
-                    fontWeight="700"
-                    _hover={{ textShadow: 'var(--glow-accent)' }}
-                  >
-                    <Shield size={18} />
-                    <Text>Admin</Text>
-                  </HStack>
-                )}
-              </HStack>
-
-              <HStack spacing={4}>
-                <Text fontSize="sm" color="var(--text-tertiary)">
-                  Hola, {user?.name}
-                </Text>
-                <Button size="sm" onClick={handleLogout} leftIcon={<LogOut size={16} />}>
-                  Cerrar Sesión
-                </Button>
-              </HStack>
-            </>
           )}
         </Flex>
+
+        {!isMobile && <Divider mb={4} />}
+
+        {/* 🔹 FILA INFERIOR */}
+        {!isMobile && (
+          <Flex justify="space-between" align="center">
+            <HStack spacing={10}>
+              <NavItem to="/" icon={<Briefcase size={18} />} label="Ofertas" />
+              <NavItem to="/my-applications" icon={<FileText size={18} />} label="Mis candidaturas" />
+              <NavItem to="/analyze-cv" icon={<FileSearch size={18} />} label="Analizar CV" />
+              <NavItem to="/profile" icon={<User size={18} />} label="Mi perfil" />
+              <NavItem to="/about" icon={<Info size={18} />} label="Sobre mí" />
+            </HStack>
+
+            {isAdmin && (
+              <NavItem
+                to="/admin"
+                icon={<Shield size={18} />}
+                label="Admin"
+                highlight
+              />
+            )}
+          </Flex>
+        )}
       </Container>
 
       {/* 📱 MOBILE DRAWER */}
@@ -157,9 +151,9 @@ function Navbar() {
           <DrawerBody>
             <VStack spacing={4} align="stretch" mt={6}>
               <Button as={Link} to="/" onClick={onClose}>Ofertas</Button>
-              <Button as={Link} to="/my-applications" onClick={onClose}>Mis Candidaturas</Button>
+              <Button as={Link} to="/my-applications" onClick={onClose}>Mis candidaturas</Button>
               <Button as={Link} to="/analyze-cv" onClick={onClose}>Analizar CV</Button>
-              <Button as={Link} to="/profile" onClick={onClose}>Mi Perfil</Button>
+              <Button as={Link} to="/profile" onClick={onClose}>Mi perfil</Button>
               <Button as={Link} to="/about" onClick={onClose}>Sobre mí</Button>
 
               {isAdmin && (
@@ -173,8 +167,12 @@ function Navbar() {
                 </Button>
               )}
 
-              <Button mt={6} onClick={handleLogout} leftIcon={<LogOut size={16} />}>
-                Cerrar Sesión
+              <Button
+                mt={6}
+                leftIcon={<LogOut size={16} />}
+                onClick={handleLogout}
+              >
+                Cerrar sesión
               </Button>
             </VStack>
           </DrawerBody>
