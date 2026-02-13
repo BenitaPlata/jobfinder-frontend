@@ -23,6 +23,7 @@ function JobFilters({ onFilterChange }) {
     technologies: '',
     companyType: '',
     englishLevel: '',
+    experienceRequired: '',
     showSalary: false,
     maxDistance: '',
     userLat: '',
@@ -82,6 +83,7 @@ function JobFilters({ onFilterChange }) {
       technologies: '',
       companyType: '',
       englishLevel: '',
+      experienceRequired: '',
       showSalary: false,
       maxDistance: '',
       userLat: '',
@@ -193,6 +195,23 @@ function JobFilters({ onFilterChange }) {
             </Select>
           </FormControl>
 
+          <FormControl>
+            <FormLabel color="var(--text-secondary)" fontWeight="600">
+              Nivel de experiencia
+            </FormLabel>
+            <Select
+              value={filters.experienceRequired}
+              onChange={(e) => handleChange('experienceRequired', e.target.value)}
+              placeholder="Todos los niveles"
+              {...selectStyles}
+            >
+              <option  value="Intern"> Prácticas</option>
+              <option value="Junior">Junior</option>
+              <option value="Mid-level">Mid-level</option>
+              <option value="Senior">Senior</option>
+              <option value="Lead">Lead</option>
+            </Select>
+          </FormControl>
           <FormControl>
             <FormLabel color="var(--text-secondary)" fontWeight="600">
               Tecnologías (separadas por coma)
