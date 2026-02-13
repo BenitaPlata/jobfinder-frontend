@@ -1,8 +1,7 @@
 import apiClient from './apiClient';
 
 export const getJobsRequest = async (filters = {}) => {
-  const params = new URLSearchParams(filters); 
-  const response = await apiClient.get(`/jobs?${params}`);
+  const response = await apiClient.get('/jobs', { params: filters });
   return response.data;
 };
 
