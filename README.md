@@ -39,7 +39,6 @@ Plataforma de búsqueda de empleo tech en España con análisis inteligente de C
 
 </div>
 
-> 📌 Las capturas deben estar en `docs/screenshots/` en la raíz del repositorio.
 
 ---
 
@@ -67,14 +66,20 @@ Desarrolladores junior, mid y senior que buscan oportunidades tech en España de
 - Perfil personalizable con CV integrado
 
 ### 💼 Ofertas de Empleo
-- **273+ ofertas tecnológicas reales** actualizadas diariamente
+- **313+ ofertas tecnológicas reales** actualizadas diariamente vía cron job (3:00 AM)
+- Detección automática de nivel de experiencia, modalidad, tecnologías y más
 - Importación automática desde API externa (Adzuna) mediante **cron job**
+- Detección inteligente automática de:
+  - Nivel de experiencia (Intern/Junior/Mid-level/Senior/Lead)
+  - Modalidad de trabajo (Remote/Hybrid/On-site)
+  - Tecnologías mencionadas
+  - Tipo de empresa y nivel de inglés requerido
 - Vista detallada: stack técnico, salario, ubicación, modalidad y enlace a oferta original
 - Contadores de vistas y aplicaciones
 
 ### 🔍 Búsqueda Avanzada
 - **Autocompletado de ciudades** con Nominatim (OpenStreetMap) — cualquier población de España
-- Filtros combinables: ciudad, modalidad (remoto/híbrido/presencial), tipo de contrato, salario mínimo, tecnologías, tipo de empresa, nivel de inglés
+-- **Filtros combinables:** ciudad, modalidad (remoto/híbrido/presencial), tipo de contrato, salario mínimo, **nivel de experiencia (Prácticas/Junior/Mid-level/Senior/Lead)**, tecnologías, tipo de empresa, nivel de inglés
 - Opción "Solo ofertas con salario visible"
 - **Geolocalización**: búsqueda por radio (10-500km) desde tu ubicación GPS
 - Las ofertas remotas **siempre aparecen** independientemente del filtro de ciudad
@@ -298,6 +303,7 @@ Abre [http://localhost:5173](http://localhost:5173) 🎉
 | Botón "Cerrar sesión" invisible en dark mode | Estilos hex directos en Chakra UI en lugar de variables CSS |
 | Hero duplicado en landing | Limpieza de código: eliminado bloque duplicado |
 | Ruta `/admin/jobs` no encontrada | Añadida ruta anidada en React Router y eliminada ruta duplicada |
+| **Filtro de experiencia no funcionaba** | Controller no pasaba `experienceRequired` a repository | Agregar `experienceRequired: req.query.experienceRequired` en `jobController.js` |
 
 ---
 
@@ -308,7 +314,9 @@ Abre [http://localhost:5173](http://localhost:5173) 🎉
 - [x] 273+ ofertas actualizadas diariamente con cron job
 - [x] Análisis de CV con IA (GPT-4o-mini)
 - [x] Comparación CV-oferta con porcentaje de compatibilidad
-- [x] Búsqueda avanzada con geolocalización y filtros combinables
+- [x] Búsqueda avanzada con geolocalización y 9 filtros combinables
+- [x] Filtro por nivel de experiencia con detección automática en cron job
+- [x] Autocompletado de ciudades con Nominatim (cualquier población de España)
 - [x] Panel de administración (usuarios + ofertas)
 - [x] Dark mode profesional con efectos neón
 - [x] Diseño 100% responsive con menú hamburguesa
