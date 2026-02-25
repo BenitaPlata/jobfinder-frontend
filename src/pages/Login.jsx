@@ -30,6 +30,7 @@ function Login() {
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
@@ -43,6 +44,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await apiClient.post('/auth/login', formData);
@@ -70,8 +72,11 @@ function Login() {
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
+
 
   return (
     <Box minH="100vh" display="flex" alignItems="center" py={12}>
@@ -183,6 +188,8 @@ function Login() {
               fontWeight="600"
               boxShadow="var(--glow-primary)"
               leftIcon={<LogIn size={20} />}
+              isLoading={loading}
+              loadingText="Iniciando sesión..."
               _hover={{
                 bg: 'var(--color-accent)',
                 transform: 'translateY(-2px)',
