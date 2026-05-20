@@ -22,8 +22,8 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Token inválido o expirado
+    if (error.response?.status === 401 && localStorage.getItem('token')) {
+      // Solo redirige si había un token activo (sesión caducada o inválida)
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       window.location.href = '/login';

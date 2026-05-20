@@ -24,23 +24,9 @@ function AppRouter() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Rutas protegidas */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Jobs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/jobs/:id"
-          element={
-            <ProtectedRoute>
-              <JobDetail />
-            </ProtectedRoute>
-          }
-        />
+        {/* Rutas públicas con contenido */}
+        <Route path="/" element={<Jobs />} />
+        <Route path="/jobs/:id" element={<JobDetail />} />
         <Route
           path="/my-applications"
           element={

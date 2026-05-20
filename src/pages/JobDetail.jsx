@@ -40,12 +40,14 @@ import {
 import { getJobByIdRequest } from '../api/jobs.api';
 import { createApplicationRequest } from '../api/applications.api';
 import { compareCVWithJobRequest } from '../api/cv.api';
+import useAuth from '../hooks/useAuth';
 
 function JobDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isAuthenticated } = useAuth();
   
   const [job, setJob] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -87,6 +89,11 @@ function JobDetail() {
   }, [id, toast]);
 
   const handleSave = async () => {
+    if (!isAuthenticated) {
+      toast({ title: 'Inicia sesión', description: 'Debes iniciar sesión para guardar ofertas', status: 'info', duration: 3000 });
+      navigate('/login');
+      return;
+    }
     try {
       await createApplicationRequest(id, 'Saved', '');
       toast({
@@ -106,6 +113,11 @@ function JobDetail() {
   };
 
   const handleApply = async () => {
+    if (!isAuthenticated) {
+      toast({ title: 'Inicia sesión', description: 'Debes iniciar sesión para inscribirte a ofertas', status: 'info', duration: 3000 });
+      navigate('/login');
+      return;
+    }
     try {
       await createApplicationRequest(id, 'Applied', '');
       toast({
@@ -126,6 +138,11 @@ function JobDetail() {
 
   // COMPARAR CV
   const handleCompareCV = async () => {
+    if (!isAuthenticated) {
+      toast({ title: 'Inicia sesión', description: 'Debes iniciar sesión para comparar tu CV', status: 'info', duration: 3000 });
+      navigate('/login');
+      return;
+    }
     try {
       setLoadingComparison(true);
       const response = await compareCVWithJobRequest(id);

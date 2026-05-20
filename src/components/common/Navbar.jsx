@@ -34,7 +34,75 @@ function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated) {
+    return (
+      <Box
+        bg="var(--bg-card)"
+        borderBottom="1px solid"
+        borderColor="var(--bg-tertiary)"
+        position="sticky"
+        top={0}
+        zIndex={1000}
+        backdropFilter="blur(10px)"
+      >
+        <Container maxW="1400px" py={4}>
+          <Flex align="center" justify="space-between">
+            {isMobile ? (
+              <Text
+                fontSize="2xl"
+                fontWeight="900"
+                letterSpacing="tight"
+                color="var(--color-primary)"
+                textShadow="var(--glow-primary)"
+              >
+                JobFinder
+              </Text>
+            ) : (
+              <>
+                <Box w="200px" />
+                <Text
+                  fontSize="4xl"
+                  fontWeight="900"
+                  letterSpacing="tight"
+                  color="var(--color-primary)"
+                  textShadow="var(--glow-primary)"
+                  textAlign="center"
+                >
+                  JobFinder
+                </Text>
+              </>
+            )}
+            <HStack spacing={3}>
+              <Button
+                as={Link}
+                to="/login"
+                size="sm"
+                variant="ghost"
+                color="var(--text-secondary)"
+                _hover={{ color: 'var(--color-accent)' }}
+              >
+                Iniciar sesión
+              </Button>
+              <Button
+                as={Link}
+                to="/register"
+                size="sm"
+                bg="#C9ADE3"
+                color="#0a0a0f"
+                _hover={{
+                  bg: '#7FFFD4',
+                  color: '#0a0a0f',
+                  boxShadow: '0 0 20px rgba(127, 255, 212, 0.5)',
+                }}
+              >
+                Registrarse
+              </Button>
+            </HStack>
+          </Flex>
+        </Container>
+      </Box>
+    );
+  }
 
   const isAdmin = user?.role === 'ADMIN';
 
